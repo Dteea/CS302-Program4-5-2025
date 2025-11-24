@@ -1,6 +1,7 @@
 import hierarchy as sm
 
 def main():
+    print("hello world")
     obj = sm.SocialMedia()
 
     obj.fill()
