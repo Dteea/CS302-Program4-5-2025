@@ -1,10 +1,8 @@
 import hierarchy as sm
-
 def main():
-    print("hello world")
     obj = sm.SocialMedia()
 
-    obj.fill()
+    obj.update(20,30,40,"jeff")
     obj.display()
 
 if __name__ == "__main__":
