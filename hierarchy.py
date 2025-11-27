@@ -1,5 +1,17 @@
+# Doney Tran
+# 11/22/25
+# CS302
+# Program 4-5
+
 import math
 import emoji
+import numpy as np
+
+class Interface():
+    def __init__(self):
+        self.__list: np.array = np
+
+
 
 class SocialMedia():
     def __init__(self, likes=0, dislikes=0, followers=0, userID=""):
@@ -94,17 +106,47 @@ class Facebook(SocialMedia):
         return None
 
     def upgrade_status(self) -> bool:
-        pass
+        is_upgraded: bool = False
+        if self.__groups >= 1000 and self.__photos > 30000:
+            self._userID += emoji.encode(" :fire:")
+            print(f"ID updated, your new ID is {self._userID}")
+            is_upgraded = True
+
+        else:
+            print("You do not have the total required amount for both groups and photots to be upgraded.")
+            is_upgraded = False
+
+        return is_upgraded
+
 
     def group_follower_ratio(self) -> float:
-        pass
+        try:
+            ratio: float = self.__groups / self._followers
+
+            print(f"The Ratio between group and followers of {self._userID} is {ratio}.")
+            return ratio
+
+        except ZeroDivisionError:
+            raise ZeroDivisionError("Ratio could not be calculated from groups and followers because followers was zero")
+
 
     def is_influencer(self) -> bool:
-        pass
+        status: bool = False 
+
+        if self.__groups >= 5000 and self._followers >= 100000 and self._likes >= 1000000:
+            print(f"Welcome to the influencer club {self._userID}! Enjoy your stay!")
+            self._userID += " (Influencer)"
+            status = True
+
+        else:
+            print(f"{self._userID} has not quite reach the numbers yet to be considered. Give it some more time")
+            
+        return status 
 
 class Tiktok(SocialMedia):
     def __init__(self, likes=0, dislikes=0, followers=0, userID="", watch_time=0, views=0):
         super().__init__(likes, dislikes, followers, userID)
+        # Watch time is in minutes
         self.__watch_time: int = watch_time
         self.__views: int = views
 
@@ -115,23 +157,47 @@ class Tiktok(SocialMedia):
         print("TTTTTTTTTTTTTTTT")
         return None
 
-    def post_statistics(self):
-        pass
+    def post_statistics(self) -> float:
+        score: float = (0.7 * self.__watch_time) + (0.3 * self.__views)
 
-    def calculate_revenue(self):
-        pass
+        # if statement to print out different levels of score
 
-    def warning(self):
-        pass
+        return score
 
-    pass
+    # Calculated in $USD
+    def calculate_revenue(self) -> float:
+        revenue_sum: float = 0
+        # Watch time rate is 10 cents per minute
+        watch_time_rate: float = (self.__watch_time * .10)
+
+        # view rate is 5 cents per view
+        view_rate: float  = (self.__views * .05)
+
+        # like rate is 2 cents per like
+        like_rate: float = (self._likes * .02)
+
+        # follower rate is .1 cents per like
+        follower_rate: float = (self._likes * .001)
+
+        revenue_sum = (watch_time_rate
+                       + view_rate
+                       + like_rate
+                       + follower_rate)
+
+        print(f"{self._userID} estimated revenue from watch time, views, likes, and followers is:\n${revenue_sum}")        
+        return revenue_sum
+
+
+    # change this function to be something else cause it doesn't make sense now 
+    # def warning(self) -> None:
+
+
 class Instagram(SocialMedia):
     def __init__(self, likes=0, dislikes=0, followers=0, userID="", top_posts=0, posts=0, share=0):
         super().__init__(likes, dislikes, followers, userID)
         self.__top_posts: int = top_posts
         self.__posts: int = posts
         self.__share: int = share
-        pass
 
     def display(self) -> None:
         super().display()
@@ -140,12 +206,29 @@ class Instagram(SocialMedia):
         print("IIIIIIIIIIIIIIII")
         return None
     
-    def post_ratio(self):
-        pass 
+    def post_ratio(self) -> float:
+        try:
+            top_post_ratio: float = self.__top_posts / self.__posts
 
+            print(f"The percentage between top posts and posts of {self._userID} is %{top_post_ratio}")
+            return top_post_ratio
+
+        except ZeroDivisionError:
+            raise ZeroDivisionError("Ratio could not be calculated because posts is 0")
+
+
+
+    # Still coming up/searching for an ok algorithm for these 2 functions 
     def post_like_ratio(self):
-        pass
+        try:
+            # Still coming up/searching for an ok algorithm
+            score: float = 0
+            pass
+            
+        except ZeroDivisionError:
+            raise ZeroDivisionError("Ratio could not be calculated due to 0")
 
     def share_like_ratio(self):
-        pass
+            score: float = 0
+            pass
 
