@@ -49,8 +49,7 @@ class SocialMedia():
     def recommend(self) -> float:
         try:
             # Equation to calculate custom score 
-            score: float = (self._likes / (self._followers)) + 0.1 * self._followers 
-
+            score: float = round((self._likes / (self._followers)) + 0.1 * self._followers, 2)
             # Threshold for user to be recommended is at least a score of 100000
             if score >= 100000:
                 print(f"{self._userID} with the score of {score} reached the threshold to be recommended.")
@@ -61,29 +60,41 @@ class SocialMedia():
             return score
         
         except ZeroDivisionError:
-            raise ZeroDivisionError("Score cannot be calculated because it tried to divide by zero, followers needs to not be zero.")
+            print("Score cannot be calculated because it tried to divide by zero, followers needs to not be zero.")
+            return -1.0
+
 
     def rating(self) -> float:
         try:
-            rating_ratio : float = self._likes / (self._likes + self._dislikes)
+            rating_ratio : float = round(self._likes / (self._likes + self._dislikes), 2)
 
             print(f"Rating of {self._userID} is {rating_ratio}.")
 
             return rating_ratio
 
         except ZeroDivisionError:
-            raise ZeroDivisionError("rating cannot be generated because it tried to divide by zero.")
+            print("rating cannot be generated because it tried to divide by zero.")
+            return -1.0
 
     def quality(self) -> float:
         try:
-            quality_score: float = (self._likes - self._dislikes) / (self._likes + self._dislikes) + (0.1 * math.log10(self._followers))
+            quality_score: float = round((self._likes - self._dislikes) / (self._likes + self._dislikes) + (0.1 * math.log10(self._followers)), 2)
+            if quality_score > 1:
+                print(f"{self._userID} based on their stats, they should be a go to if they haven't been visited yet!")
+
+            elif quality_score < 1:
+                print(f"{self._userID} based on their stats, they should at least get a visit!") 
+
+            elif quality_score < 0:
+                print(f"{self._userID} based on their stats, they should not be visited at any cost!")
 
             print (f"Quality of {self._userID} is {quality_score}.")
 
             return quality_score
 
         except ZeroDivisionError:
-            raise ZeroDivisionError("quality cannot be generated because it tried to divide by zero.")
+            print("quality cannot be generated because it tried to divide by zero.")
+            return -1.0
         
     def get_user_id(self) -> str:
         return self._userID
@@ -105,7 +116,7 @@ class Facebook(SocialMedia):
     def upgrade_status(self) -> bool:
         is_upgraded: bool = False
         if self.__groups >= 1000 and self.__photos > 30000:
-            self._userID += emoji.encode(" :fire:")
+            self._userID += emoji.emojize(" :fire:")
             print(f"ID updated, your new ID is {self._userID}")
             is_upgraded = True
 
@@ -118,13 +129,14 @@ class Facebook(SocialMedia):
 
     def group_follower_ratio(self) -> float:
         try:
-            ratio: float = self.__groups / self._followers
+            ratio: float = round(self.__groups / self._followers, 2)
 
             print(f"The Ratio between group and followers of {self._userID} is {ratio}.")
             return ratio
 
         except ZeroDivisionError:
-            raise ZeroDivisionError("Ratio could not be calculated from groups and followers because followers was zero")
+            print("Ratio could not be calculated from groups and followers because followers was zero")
+            return -1.0
 
 
     def is_influencer(self) -> bool:
@@ -155,7 +167,7 @@ class Tiktok(SocialMedia):
         return None
 
     def post_statistics(self) -> float:
-        score: float = (0.7 * self.__watch_time) + (0.3 * self.__views)
+        score: float = round((0.7 * self.__watch_time) + (0.3 * self.__views), 2)
 
         # if statement to print out different levels of score
 
