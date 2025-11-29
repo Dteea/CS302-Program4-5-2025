@@ -4,14 +4,12 @@
 # Program 4-5
 
 
-import hierarchy as socialmedia
+import hierarchy as sm
 import numpy as np
 def main():
-    obj = socialmedia.SocialMedia()
-    obj2 = socialmedia.Instagram(0,0,0,"",0,0,0)
+    interface: sm = sm.Interface()
+    interface.menu()
 
-    obj.update(20,30,40,"jeff")
-    obj.display()
 
 if __name__ == "__main__":
     main()

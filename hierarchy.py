@@ -5,14 +5,8 @@
 
 import math
 import emoji
-import numpy as np
 
-class Interface():
-    def __init__(self):
-        self.__list: np.array = np
-
-
-
+# Core Hierarchy
 class SocialMedia():
     def __init__(self, likes=0, dislikes=0, followers=0, userID=""):
         self._likes: int = likes 
@@ -90,6 +84,9 @@ class SocialMedia():
 
         except ZeroDivisionError:
             raise ZeroDivisionError("quality cannot be generated because it tried to divide by zero.")
+        
+    def get_user_id(self) -> str:
+        return self._userID
 
 
 class Facebook(SocialMedia):
@@ -179,7 +176,7 @@ class Tiktok(SocialMedia):
         # follower rate is .1 cents per like
         follower_rate: float = (self._likes * .001)
 
-        revenue_sum = (watch_time_rate
+        revenue_sum: float = (watch_time_rate
                        + view_rate
                        + like_rate
                        + follower_rate)
@@ -188,8 +185,15 @@ class Tiktok(SocialMedia):
         return revenue_sum
 
 
-    # change this function to be something else cause it doesn't make sense now 
-    # def warning(self) -> None:
+    def views_per_follower(self) -> int:
+        try:
+            ratio: int = math.floor(self.__views / self._followers)
+
+            print(f"For every follower, there are about {ratio} views for {self._userID}")
+            return ratio
+
+        except ZeroDivisionError:
+            raise ZeroDivisionError("Ratio could not be calculated from views and followers because followers was zero")
 
 
 class Instagram(SocialMedia):
@@ -218,17 +222,132 @@ class Instagram(SocialMedia):
 
 
 
-    # Still coming up/searching for an ok algorithm for these 2 functions 
     def post_like_ratio(self):
         try:
-            # Still coming up/searching for an ok algorithm
-            score: float = 0
-            pass
+            score: float = self.__posts / self._likes 
+
+            print(f"The ratio between posts and likes of {self._userID} is {score}.")
+            return score
             
         except ZeroDivisionError:
-            raise ZeroDivisionError("Ratio could not be calculated due to 0")
+            raise ZeroDivisionError("Ratio could not be calculated due to likes being zero")
 
     def share_like_ratio(self):
-            score: float = 0
-            pass
+        try:
+            score: float = self.__share / self._likes 
+
+            print(f"The ratio between shares and likes of {self._userID} is {score}.")
+            return score
+
+        except ZeroDivisionError:
+            raise ZeroDivisionError("Ratio could not be calculated due to likes being zero")
+
+
+# User/Client Interface
+class Interface():
+    def __init__(self):
+        self.__list: list = list()
+
+    def add(self, data: SocialMedia) -> None:
+        # When 234 Tree is implemented use this to add to the Tree
+        print(f"Added {data.get_user_id()} to the List")
+        self.__list.append(data)
+        return None
+    
+    def _validate_int(self, prompt: str) -> int:
+        while True:
+            try:
+                value = int(input(prompt))
+                if value < 0:
+                    raise ValueError("It cannot be negative and must be at least 0 or greater")
+                return value
+
+            except ValueError:
+                print("Invalid Input, please try again.")
+                
+
+
+    def _validate_str(self, prompt: str) -> int:
+        while True:
+            try:
+                value = input(prompt)
+                if value == "":
+                    raise ValueError("User Id cannot be empty!")
+                return value
+                
+            except ValueError:
+                print("Invalid input, please try again.")
+
+
+    def menu(self) -> None:
+        choice: int = 20 
+        while choice != 0:
+            print("^^^^^^^^^^^^^^^^^^^\n")
+            print("Welcome to the Social Media Analytics Tool! Please select from below!")
+            print("1. Add Social Media user")
+            print("2. Add Instagram user")
+            print("3. Add Tiktok user")
+            print("4. Add Facebook user")
+            print("5. Display List")
+            print("6. Search for user")
+
+            print("0. Exit")
+            print("^^^^^^^^^^^^^^^^^^^")
+            choice = self._validate_int("Please select from the options for below on what you want to do :D\n")
+            
+            match choice:
+                case 1:
+                    self.__input(1)
+                case 2:
+                    self.__input(2)
+                case 3:
+                    self.__input(3)
+                case 4:
+                    self.__input(4)
+                case 5:
+                    self.display()
+                case 0:
+                    print("Exiting! Have a great day!")
+
+                case _:
+                    print("Invalid selection")
+        return None
+
+    def __input(self, choice) -> None:
+
+
+        name: str = self._validate_str("Please enter the UserID: ")
+        likes: int = self._validate_int("Please enter the amount of likes they have: ") 
+        dislikes: int = self._validate_int("Please enter the amount of dislikes they have: ")
+        followers: int = self._validate_int("Please enter the amount of followers they have: ")
+
+        if choice == 1:
+            self.add(SocialMedia(likes, dislikes, followers, name))
+
+        elif choice == 2:
+            top_posts: int = self._validate_int("Please enter the amount of top_posts they have: ") 
+            posts: int = self._validate_int("Please enter the amount of posts they have: ")
+            share: int = self._validate_int("Please enter the amount of sharing they have done: ")
+            self.add(Instagram(likes, dislikes, followers, name, top_posts, posts, share))
+        
+        elif choice == 3:
+            watch_time: int = self._validate_int("Please enter the watch time amount they have in minutes: ")
+            views: int = self._validate_int("Please enter the amount of views they have: ")
+            self.add(Tiktok(likes, dislikes, followers, name, watch_time, views))
+
+        elif choice == 4:
+            groups: int = self._validate_int("Please enter the amount of groups they have")
+            photos: int = self._validate_int("Please enter the amount of photos they have: ")
+            self.add(Tiktok(likes, dislikes, followers, name, groups, photos))
+
+        return None
+
+
+    def display(self) -> None:
+        print("List of stored users:")
+        for objects in self.__list:
+            objects.display()
+            print("\n")
+
+        return None
 
