@@ -56,23 +56,7 @@ def test_empty_instagram(instagram_obj):
     assert instagram_obj._Instagram__posts == 0
     assert instagram_obj._Instagram__share == 0
 
-# Test for SocialMedia Class methods
-# Maybe remove update since interface should deal with input
-#def test_update_with_negatives(social_media_obj):
-#    assert social_media_obj.update(-1, 6, 1293, "Test") == -1 
-#    assert social_media_obj.update(327, -32476, 1293, "Test") == -1
-#    assert social_media_obj.update(327, 32476, -371293, "Test") == -1 
-#
-#def test_update_with_empty_string(social_media_obj):
-#    assert social_media_obj.update(1, 6, 1293, "") == -1 
-#    assert social_media_obj.update(327, 32476, 1293, "") == -1
-#    assert social_media_obj.update(327, 32476, 371293, "") == -1 
-#
-#def test_update_valid(social_media_obj):
-#    assert social_media_obj.update(327, 32479, 295801, "Test") == 1
-#    assert social_media_obj.update(5, 0, 0, "127") == 1
-#    assert social_media_obj.update(2136, 34, 3, "Adrian127") == 1
-
+# test social media base class methods
 def test_recommend_valid_score_greater_than_100000(social_media_obj):
     social_media_obj._likes = 1000000
     social_media_obj._followers = 2347324 
@@ -201,11 +185,80 @@ def test_is_influencer_not_influencer(facebook_obj):
     assert facebook_obj.is_influencer() == False
 
 # Tiktok derived class methods
-def test_post_statisitcs(tiktok_obj):
+def test_post_statisitcs_score_greater_than_70000(tiktok_obj):
     tiktok_obj._Tiktok__watch_time = 206457
     tiktok_obj._Tiktok__views = 31236
     assert tiktok_obj.post_statistics() == 153890.7 
 
+def test_post_statisitcs_score_between_20000_and_70000(tiktok_obj):
+    tiktok_obj._Tiktok__watch_time = 64573
+    tiktok_obj._Tiktok__views = 31231
+    assert tiktok_obj.post_statistics() == 54570.4
+
+def test_post_statisitcs_score_less_than_20000(tiktok_obj):
     tiktok_obj._Tiktok__watch_time = 6457
     tiktok_obj._Tiktok__views = 3123
     assert tiktok_obj.post_statistics() == 5456.8 
+
+def test_calculate_revenue_valid(tiktok_obj):
+    tiktok_obj._Tiktok__watch_time = 1248
+    tiktok_obj._Tiktok__views = 3219
+    tiktok_obj._likes = 9870
+    tiktok_obj._followers = 765 
+    assert isinstance(tiktok_obj.calculate_revenue(), float)
+    assert tiktok_obj.calculate_revenue() == 493.02 
+
+def test_views_per_follower_valid(tiktok_obj):
+    tiktok_obj._userID = "Dansoats12"
+    tiktok_obj._Tiktok__views = 32984709 
+    tiktok_obj._followers = 5678588
+    assert isinstance(tiktok_obj.views_per_follower(), int)
+    assert tiktok_obj.views_per_follower() == 5
+
+def test_views_per_follower_zero(tiktok_obj):
+    tiktok_obj._userID = "Dansoats12"
+    tiktok_obj._Tiktok__views = 32984709 
+    tiktok_obj._followers = 0 
+    assert tiktok_obj.views_per_follower() == -1
+
+# Instagram derived class methods
+def test_post_ratio_valid(instagram_obj):
+    instagram_obj._userID = "oneclear89"
+    instagram_obj._Instagram__top_posts = 67731461
+    instagram_obj._Instagram__posts = 2301823
+    assert isinstance(instagram_obj.post_ratio(), float)
+    assert instagram_obj.post_ratio() == 29.43
+
+def test_post_ratio_zero(instagram_obj):
+    instagram_obj._userID = "oneclear89"
+    instagram_obj._Instagram__top_posts = 67
+    instagram_obj._Instagram__posts = 0 
+    assert instagram_obj.post_ratio() == -1.0
+
+def test_post_like_ratio_valid(instagram_obj):
+    instagram_obj._userID = "jancd2"
+    instagram_obj._Instagram__posts = 21823
+    instagram_obj._likes = 96787
+    assert isinstance(instagram_obj.post_like_ratio(), float)
+    assert instagram_obj.post_like_ratio() == 0.23
+
+def test_post_like_ratio_zero(instagram_obj):
+    instagram_obj._userID = "jancd2"
+    instagram_obj._Instagram__top_posts = 0 
+    instagram_obj._Instagram__posts = 0 
+    assert instagram_obj.post_like_ratio() == -1.0
+
+def test_share_like_ratio_valid(instagram_obj):
+    instagram_obj._userID = "customkars1"
+    instagram_obj._Instagram__posts = 21823
+    instagram_obj._likes = 96787
+    assert isinstance(instagram_obj.share_like_ratio(), float)
+    assert instagram_obj.share_like_ratio() == 0.23
+
+def test_share_like_ratio_zero(instagram_obj):
+    instagram_obj._userID = "customkars1"
+    instagram_obj._Instagram__top_posts = 23489
+    instagram_obj._Instagram__posts = 0 
+    assert instagram_obj.share_like_ratio() == -1.0
+
+# Test interface if there is time

@@ -20,32 +20,6 @@ class SocialMedia():
         print("================")
         return None
 
-    def update(self, likes, dislikes, followers, userID) -> int:
-        try:
-            # Make sure arguments coming in are ints and the user ID being a string
-            if isinstance(likes, int) and isinstance(dislikes, int) and isinstance(followers, int) and isinstance(userID, str):
-                
-                # Check if integers are negative and raise an exception
-                if likes < 0 or dislikes < 0 or followers < 0:
-                    raise ValueError("likes, dislikes, and followers cannot be negative")
-                
-                if userID == "":
-                    raise ValueError("UserID cannot be empty.")
-
-                self._likes = int(likes)
-                self._dislikes = int(dislikes)
-                self._followers = int(followers)
-                self._userID = str(userID)
-                
-            else:
-                raise ValueError("Variables passed in do not match. You have Invalid types somewhere.")
-
-        except ValueError or TypeError:
-            print("Update failed, please try again.")
-            return -1
-
-        return 1
-    
     def recommend(self) -> float:
         try:
             # Equation to calculate custom score 
@@ -62,7 +36,6 @@ class SocialMedia():
         except ZeroDivisionError:
             print("Score cannot be calculated because it tried to divide by zero, followers needs to not be zero.")
             return -1.0
-
 
     def rating(self) -> float:
         try:
@@ -98,7 +71,6 @@ class SocialMedia():
         
     def get_user_id(self) -> str:
         return self._userID
-
 
 class Facebook(SocialMedia):
     def __init__(self, likes=0, dislikes=0, followers=0, userID="", groups=0, photos=0):
@@ -169,7 +141,16 @@ class Tiktok(SocialMedia):
     def post_statistics(self) -> float:
         score: float = round((0.7 * self.__watch_time) + (0.3 * self.__views), 2)
 
-        # if statement to print out different levels of score
+        if score > 70000:
+            print(f"{self._userID} is one popular fella!")
+
+        elif score >= 20000 and score < 70000:
+            print(f"{self._userID} is getting there with their posts.")
+
+        elif score < 20000:
+            print(f"{self._userID} posts fall a bit short.")
+
+        print(f"Score for {self._userID} is {score}.")
 
         return score
 
@@ -188,10 +169,10 @@ class Tiktok(SocialMedia):
         # follower rate is .1 cents per like
         follower_rate: float = (self._likes * .001)
 
-        revenue_sum: float = (watch_time_rate
+        revenue_sum: float = round((watch_time_rate
                        + view_rate
                        + like_rate
-                       + follower_rate)
+                       + follower_rate), 2)
 
         print(f"{self._userID} estimated revenue from watch time, views, likes, and followers is:\n${revenue_sum}")        
         return revenue_sum
@@ -205,8 +186,8 @@ class Tiktok(SocialMedia):
             return ratio
 
         except ZeroDivisionError:
-            raise ZeroDivisionError("Ratio could not be calculated from views and followers because followers was zero")
-
+            print("Ratio could not be calculated from views and followers because followers was zero")
+            return -1
 
 class Instagram(SocialMedia):
     def __init__(self, likes=0, dislikes=0, followers=0, userID="", top_posts=0, posts=0, share=0):
@@ -224,48 +205,42 @@ class Instagram(SocialMedia):
     
     def post_ratio(self) -> float:
         try:
-            top_post_ratio: float = self.__top_posts / self.__posts
+            top_post_ratio: float = round(self.__top_posts / self.__posts, 2)
 
             print(f"The percentage between top posts and posts of {self._userID} is %{top_post_ratio}")
             return top_post_ratio
 
         except ZeroDivisionError:
-            raise ZeroDivisionError("Ratio could not be calculated because posts is 0")
+            print("Ratio could not be calculated because posts is 0")
+            return -1.0
 
-
-
-    def post_like_ratio(self):
+    def post_like_ratio(self) -> float:
         try:
-            score: float = self.__posts / self._likes 
+            score: float = round(self.__posts / self._likes, 2)
 
             print(f"The ratio between posts and likes of {self._userID} is {score}.")
             return score
             
         except ZeroDivisionError:
-            raise ZeroDivisionError("Ratio could not be calculated due to likes being zero")
+            print("Ratio could not be calculated due to likes being zero")
+            return -1.0
 
-    def share_like_ratio(self):
+    def share_like_ratio(self) -> float:
         try:
-            score: float = self.__share / self._likes 
+            score: float = round(self.__share / self._likes, 2)
 
             print(f"The ratio between shares and likes of {self._userID} is {score}.")
             return score
 
         except ZeroDivisionError:
-            raise ZeroDivisionError("Ratio could not be calculated due to likes being zero")
-
+            print("Ratio could not be calculated due to likes being zero")
+            return -1.0
 
 # User/Client Interface
 class Interface():
     def __init__(self):
         self.__list: list = list()
 
-    def add(self, data: SocialMedia) -> None:
-        # When 234 Tree is implemented use this to add to the Tree
-        print(f"Added {data.get_user_id()} to the List")
-        self.__list.append(data)
-        return None
-    
     def _validate_int(self, prompt: str) -> int:
         while True:
             try:
@@ -277,8 +252,6 @@ class Interface():
             except ValueError:
                 print("Invalid Input, please try again.")
                 
-
-
     def _validate_str(self, prompt: str) -> int:
         while True:
             try:
@@ -290,6 +263,11 @@ class Interface():
             except ValueError:
                 print("Invalid input, please try again.")
 
+    def add(self, data: SocialMedia) -> None:
+        # When 234 Tree is implemented use this to add to the Tree
+        print(f"Added {data.get_user_id()} to the List")
+        self.__list.append(data)
+        return None
 
     def menu(self) -> None:
         choice: int = 20 
@@ -302,6 +280,7 @@ class Interface():
             print("4. Add Facebook user")
             print("5. Display List")
             print("6. Search for user")
+            print("7. ")
 
             print("0. Exit")
             print("^^^^^^^^^^^^^^^^^^^")
