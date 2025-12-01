@@ -260,5 +260,3 @@ def test_share_like_ratio_zero(instagram_obj):
     instagram_obj._Instagram__top_posts = 23489
     instagram_obj._Instagram__posts = 0 
     assert instagram_obj.share_like_ratio() == -1.0
-
-# Test interface if there is time

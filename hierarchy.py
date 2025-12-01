@@ -330,8 +330,7 @@ class Interface():
             print("3. Add Tiktok user")
             print("4. Add Facebook user")
             print("5. Display List")
-            print("6. Search for user")
-            print("7. ")
+            print("6. Test class methods")
 
             print("0. Exit")
             print("^^^^^^^^^^^^^^^^^^^")
@@ -348,6 +347,9 @@ class Interface():
                     self.__input(4)
                 case 5:
                     self.display()
+                case 6:
+                    self.class_methods()
+
                 case 0:
                     print("Exiting! Have a great day!")
 
@@ -385,11 +387,125 @@ class Interface():
 
         # Facebook Object
         elif choice == 4:
-            groups: int = self._validate_int("Please enter the amount of groups they have")
+            groups: int = self._validate_int("Please enter the amount of groups they have: ")
             photos: int = self._validate_int("Please enter the amount of photos they have: ")
             self.add(Tiktok(likes, dislikes, followers, name, groups, photos))
 
         return None
+
+    # This function is another menu that is displayed to the user/client for them to select what class to test. If the user/client
+    # wants to exit out, they should select 0. It will return None if successful. 
+    def class_methods(self) -> None:
+        choice: int = 20
+        while choice != 0:
+            print("========METHOD TESTING========")
+            print("Select below to test different methods for each class:")
+            print("1. Social Media user")
+            print("2. Instagram user")
+            print("3. Tiktok user")
+            print("4. Facebook user")
+            print("0. Exit")
+            choice = self._validate_int("Please select from the options for below on what you want to do :D\n")
+
+            match choice:
+                case 1:
+                    self.social_media_methods(choice)
+                case 2:
+                    self.social_media_methods(choice)
+                case 3:
+                    self.social_media_methods(choice)
+                case 4:
+                    self.social_media_methods(choice)
+
+                case 0:
+                    print("Exiting! Have a great day!")
+
+                case _:
+                    print("Invalid selection")
+
+    # This function lets the user/client test out the methods of each class depending on what they choose. This function returns None if successful.
+    def social_media_methods(self, choice: int) -> None:
+        name: str = self._validate_str("Please enter the UserID: ")
+        likes: int = self._validate_int("Please enter the amount of likes they have: ") 
+        dislikes: int = self._validate_int("Please enter the amount of dislikes they have: ")
+        followers: int = self._validate_int("Please enter the amount of followers they have: ")
+
+        temp: SocialMedia = None
+        # Social Media object
+        if choice == 1:
+            temp = SocialMedia(likes, dislikes, followers, name)
+            print("++++BASE++++")
+            temp.display()
+            temp.quality()
+            temp.rating()
+            temp.recommend()
+            self.add(temp)
+            print('\n')
+
+        # Instagram Object
+        elif choice == 2:
+            top_posts: int = self._validate_int("Please enter the amount of top_posts they have: ") 
+            posts: int = self._validate_int("Please enter the amount of posts they have: ")
+            share: int = self._validate_int("Please enter the amount of sharing they have done: ")
+
+            temp = Instagram(likes, dislikes, followers, name, top_posts, posts, share)
+            print("++++BASE++++")
+            temp.display()
+            temp.quality()
+            temp.rating()
+            temp.recommend()
+            print("\n")
+
+            print("++++Derived++++")
+            temp.post_like_ratio()
+            temp.post_ratio()
+            temp.share_like_ratio()
+            self.add(temp)
+            print("\n")
+
+        # Tiktok Object 
+        elif choice == 3:
+            watch_time: int = self._validate_int("Please enter the watch time amount they have in minutes: ")
+            views: int = self._validate_int("Please enter the amount of views they have: ")
+
+            temp = Tiktok(likes, dislikes, followers, name, watch_time, views)
+            print("++++BASE++++")
+            temp.display()
+            temp.quality()
+            temp.rating()
+            temp.recommend()
+            print("\n")
+
+            print("++++Derived++++")
+            temp.calculate_revenue()
+            temp.post_statistics()
+            temp.views_per_follower()
+            self.add(temp)
+            print("\n")
+            
+
+        # Facebook Object
+        elif choice == 4:
+            groups: int = self._validate_int("Please enter the amount of groups they have: ")
+            photos: int = self._validate_int("Please enter the amount of photos they have: ")
+            temp = Facebook(likes, dislikes, followers, name, groups, photos)
+            print("++++BASE++++")
+            temp.display()
+            temp.quality()
+            temp.rating()
+            temp.recommend()
+            print("\n")
+
+            print("++++Derived++++")
+            temp.group_follower_ratio()
+            temp.is_influencer()
+            temp.upgrade_status()
+            self.add(temp)
+            print("\n")
+        
+        return None
+
+
 
     # This function displays the SocialMedia objects that is currently in the interface list. It will display empty if there is nothing.
     # The function returns None if successful.
