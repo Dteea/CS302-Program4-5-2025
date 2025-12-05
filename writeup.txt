@@ -1,0 +1,63 @@
+Doney Tran
+12/2/25
+CS302
+Program 4-5
+
+2a. I think my design was pretty good compared to the other programs I have done. I was able to plan and test some of my functions because
+of the specification I created instead of thinking it through while coding. The classes I kept very simple since we don't really have much time
+and I want to try and implement what was asked. I did a simple hierarchy with 3 derived and had an interface to interact with the classes. Using
+Python helped immensly with quicking implemnting compared to c++ since I don't have to deal with managing my own memory.
+
+b. Since we had different "types" of social media meaning that each one of them were different in terms of functionallity, the hierarchy fit in
+because these were things that also had a bunch in common like follows and userID. It can be expanded to bigger applications if there are more
+social media things out there which in reality, we do have like snapchat, twitter, whatsapp, etc.
+
+c. I think when I was half way into making my core hierarchy, I thought about making the base class as an abstract class since it kind of didn't 
+make sense to have a social media class, but I decided to stick without it. I also thought about utilizing dynamic binding since a lot of my functions
+were pretty similiar in nature and it would simplify a lot of things, but again I wanted to keep it simple and understandable for myself.
+
+d. I think for the most part yes, each of my classes used their own data members in the classes methods to do some unique things like calculating
+revenue or appending an emoji or status to their userID. Most were kept in their own class besides the data structure.
+
+e. I don't think I had much of classes doing work of other classes. My own classes methods were kept inside their class and not interacting as
+much with other classes.
+
+f. In terms of validity, I think it was good because I was able to implemnt the hierarchy and experiencing inheritance in Python. Using the super
+to access the base class things was also something that I was meant to do in the program.
+
+g. Finally getting near the end, for program 4, I was able to do most of the parts, but I forgot to overload some operators before turning that in, but
+I implemented it for program 5 becasue it was needed. I was able to do a bit of testing with the pytest, but I kind of ran out of steam trying to come up with
+tests for the data structures and some other last minute things, but overall, I think I accomplished most of what was assigned.
+
+h. I guess the one major thing I had to change was some functions of my derived classes because I had meant for my watch_time variable for my
+tiktok class to be the watch time for a user, but I made it so that the watch time was from the perspective of a user consuming the content.
+I had a warning method that was supposed to check if a user that consumes the content had watch too much, but that didn't make sense for my tiktok
+class because it was for a user's total watch_time from the people consuming their content. So after changing that, everything made sense for this program
+to be an analyzer tool for users of different types of social media.
+
+i. I think for the most part, the efficiency of my code is good because I'm not stuck having to deal with memory management, but on the downside, I don't
+know how efficient the memory management is. I'm assuming that there are way better people out there than me who wrote that know a lot more about it
+than I do so I'm hoping it is good. Because of that, the code I write is purely just to implement the ideas/vision of what the project demanded of
+and I could focus on that which means simpler code and it makes it easier to understand, which can make it a bit more efficient than if I were
+writing this in a different language like c++.
+
+3a. The data structure performance wise to store these social media objects is pretty good because a 234 balances itself out.
+
+b. Maybe a different type of balancing tree would work better. I've heard about b-trees and that you can scale up how many can fit in a node
+so that might be better than a 234 tree. Like having 10 data items in a node and splitting it from there which means that you can compress the
+height of the tree.
+
+c. I mentioned overloading my comparison operators in my base class and that is where the efficiency comes in when I was writing my 234 tree.
+I read about the lists sort and from what I understand, it uses some sort of comparsion depending on what is contained inside and when I overloaded
+my comparison operators to decide where greater and less than data would go, the sort came in handy since I could just call that provided sort function
+for the list. Like adding a data to my node, I can just sort after I add because I overloaded the operator to compare the length of the userID. A 234 tree
+is good because of compressing the height of the tree down. With a bst, if the data was sorted, traversing it would take O(n) time compared to a 234
+which takes O(log(n)) time.
+
+d. I guess in my data structure, I needed to utilize loops because it was simple for me to understand and tackle the problem of inserting and splitting.
+I also had getters and setter which wasn't great. I know about the copy module that Python has, but I didn't really get a chance to play with it, 
+so that is something that could also maybe make it efficient compared to not using and relying on the object referencing.
+
+e. If I had more time, I would flush out and test my data structure because I'm still not 100 percent sure if it works as how it was intended to be. I would
+also do a better job at making the interface more easier to navigate and efficient because I scattered a lot of input which I thought could be handled all
+together. Overall I think that is what I would come back and change with more time, but I'm satisfied with what I've managed to do.

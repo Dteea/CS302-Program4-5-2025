@@ -1,0 +1,22 @@
+Doney Tran
+12/2/25
+CS302
+Program 4-5
+
+1. The integrated debugger was really cool to see and being able to use it. There were a lot of fancy things coming from gdb which made it nicer
+to debug. Like keeping tabs on the stack and function calls, highlighting and showing what some data is set to on the left hand side.
+
+2. I had a problem with data not being inserted in properly and I also ran into some trouble with me uncommenting things out and forgetting to
+uncomment after tackling a problem. I used it to step through my program while I had a sheet of paper noting where things were and what the methods
+were doing.
+
+3. Definitely, something that was nice was that I didn't have to interact with it through the command line and it was kind of just already there
+with a few clicks of some buttons. Like setting break points on the left where the line numbers are and being able to see while I still code around.
+Then when time comes around to debug, I just had to select the option to run in in debug mode and bam, its there.
+
+4. I want to learn how to see all the variables while debugging because I could partially see it on the left side, but I didn't really know how
+to expand on it as much. I also just kept seeing the location of my objects, but I wanted to see what it's data members held and not the location.
+
+5. I think my approach was valid even though for the most part the stuff I wrote just kind of worked becuase of Python and it being dynamically typed
+language. I used the debugger to go line by line to find errors or logical errors that I made which the program didn't flag. I used it to help me make
+my program more efficient by catching those things which contributes to me using the IDE debugger as it was intended for it to be.
