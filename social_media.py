@@ -5,6 +5,7 @@
 
 import math
 import emoji
+import data_structures as ds
 
 # Core Hierarchy
 class SocialMedia():
@@ -14,6 +15,29 @@ class SocialMedia():
         self._dislikes: int = dislikes
         self._followers: int = followers 
         self._userID: str = userID
+
+    # Destructor
+    #def __del__(self):
+    #    self._likes = 0 
+    #    self._dislikes = 0
+    #    self._followers = 0
+    #    self._userID = 0 
+
+    # Overloaded operators
+    def __eq__(self, operand2) -> bool:
+        if isinstance(operand2, SocialMedia):
+            return self._userID == operand2._userID
+        return False
+    
+    def __lt__(self, operand2) -> bool:
+        if isinstance(operand2, SocialMedia):
+            return len(self._userID) < len(operand2._userID)
+    
+    def __gt__(self, operand2):
+        if isinstance(operand2, SocialMedia):
+            return len(self._userID) > len(operand2._userID)
+
+
 
     # This function displays the user's id and the protected data members. The function will return None to indicate success.
     def display(self) -> None:
@@ -91,6 +115,10 @@ class Facebook(SocialMedia):
         self.__groups: int = groups 
         self.__photos: int = photos
 
+    # Destructor
+    #def __del__(self):
+    #    self.__groups = 0
+    #    self.__photos = 0
     # This function displays the private data members of the facebook class and it's SocialMedia base class members. The FFFF's indicate that
     # the data members belong to the facebook object. It returns None if successful.
     def display(self)-> None:
@@ -154,6 +182,10 @@ class Tiktok(SocialMedia):
         self.__watch_time: int = watch_time
         self.__views: int = views
 
+    # Destructor
+    #def __del__(self):
+    #    self.__watch_time = 0
+    #    self.__views = 0
     # This function calls the base class display and also display's the Tiktok data members. TTTT's indicate that the Tiktok data
     # members are being printed out. It will return None if successful.
     def display(self) -> None:
@@ -227,6 +259,11 @@ class Instagram(SocialMedia):
         self.__posts: int = posts
         self.__share: int = share
 
+    # Destructor
+    #def __del__(self):
+    #    self.__top_posts = 0
+    #    self.__posts = 0
+    #    self.__share = 0
     # This function calls the SocialMedia display and also display's Instagram's own data members. The IIII's indicate
     # the data members. The function returns None if successful.
     def display(self) -> None:
@@ -282,8 +319,11 @@ class Instagram(SocialMedia):
 class Interface():
     # Default constructor
     def __init__(self):
-        self.__list: list = list()
+        self.__tree = ds.Tree234()
 
+    # Destructor
+    #def __del__(self):
+    #    self.__tree = None
     # This helper function is used to check that all inputed integers are not negative and allows for numbers 0-MAX.
     # It will loop until the user sastifies those conditions and returns the correct inputed number
     def _validate_int(self, prompt: str) -> int:
@@ -310,12 +350,11 @@ class Interface():
             except ValueError:
                 print("Invalid input, please try again.")
 
-    # This function takes in a SocialMedia object and adds it to the interfaces list of SocialMedia objects. It will also
-    # add the object to the 234 tree. It will return None if successful. 
+    # This function takes in a social media object and adds it to the 234 tree of social media objects. It will print a message
+    # that it has been added and if succesful, returns None.
     def add(self, data: SocialMedia) -> None:
-        # When 234 Tree is implemented use this to add to the Tree
-        print(f"Added {data.get_user_id()} to the List")
-        self.__list.append(data)
+        print(f"{data.get_user_id()} has been added to the tree!")
+        self.__tree.insert(data)
         return None
 
     # This function shows a list of options for the user/client to interact with. Depending on what they select, the selected
@@ -329,7 +368,7 @@ class Interface():
             print("2. Add Instagram user")
             print("3. Add Tiktok user")
             print("4. Add Facebook user")
-            print("5. Display List")
+            print("5. Display Tree")
             print("6. Test class methods")
 
             print("0. Exit")
@@ -346,7 +385,7 @@ class Interface():
                 case 4:
                     self.__input(4)
                 case 5:
-                    self.display()
+                    self.__tree.display()
                 case 6:
                     self.class_methods()
 
@@ -504,8 +543,6 @@ class Interface():
             print("\n")
         
         return None
-
-
 
     # This function displays the SocialMedia objects that is currently in the interface list. It will display empty if there is nothing.
     # The function returns None if successful.

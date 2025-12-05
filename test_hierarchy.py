@@ -4,25 +4,25 @@
 # Program 4-5
 
 import pytest
-import hierarchy
+import social_media
 import emoji
 
 # Define empty objects
 @pytest.fixture
 def social_media_obj():
-    return hierarchy.SocialMedia(0, 0, 0, "")
+    return social_media.SocialMedia(0, 0, 0, "")
 
 @pytest.fixture
 def facebook_obj():
-    return hierarchy.Facebook(0, 0, 0, "", 0, 0)
+    return social_media.Facebook(0, 0, 0, "", 0, 0)
 
 @pytest.fixture
 def tiktok_obj():
-    return hierarchy.Tiktok(0, 0, 0, "", 0, 0)
+    return social_media.Tiktok(0, 0, 0, "", 0, 0)
 
 @pytest.fixture
 def instagram_obj():
-    return hierarchy.Instagram(0, 0, 0, "", 0, 0, 0)
+    return social_media.Instagram(0, 0, 0, "", 0, 0, 0)
 
 # Testing creation of empty social_media_objs of each class
 def test_empty_social_media(social_media_obj):
