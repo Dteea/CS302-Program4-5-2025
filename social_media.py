@@ -17,11 +17,11 @@ class SocialMedia():
         self._userID: str = userID
 
     # Destructor
-    #def __del__(self):
-    #    self._likes = 0 
-    #    self._dislikes = 0
-    #    self._followers = 0
-    #    self._userID = 0 
+    def __del__(self):
+        self._likes = 0 
+        self._dislikes = 0
+        self._followers = 0
+        self._userID = 0 
 
     # Overloaded operators
     def __eq__(self, operand2) -> bool:
@@ -116,9 +116,10 @@ class Facebook(SocialMedia):
         self.__photos: int = photos
 
     # Destructor
-    #def __del__(self):
-    #    self.__groups = 0
-    #    self.__photos = 0
+    def __del__(self):
+        self.__groups = 0
+        self.__photos = 0
+
     # This function displays the private data members of the facebook class and it's SocialMedia base class members. The FFFF's indicate that
     # the data members belong to the facebook object. It returns None if successful.
     def display(self)-> None:
@@ -183,9 +184,10 @@ class Tiktok(SocialMedia):
         self.__views: int = views
 
     # Destructor
-    #def __del__(self):
-    #    self.__watch_time = 0
-    #    self.__views = 0
+    def __del__(self):
+        self.__watch_time = 0
+        self.__views = 0
+
     # This function calls the base class display and also display's the Tiktok data members. TTTT's indicate that the Tiktok data
     # members are being printed out. It will return None if successful.
     def display(self) -> None:
@@ -260,10 +262,11 @@ class Instagram(SocialMedia):
         self.__share: int = share
 
     # Destructor
-    #def __del__(self):
-    #    self.__top_posts = 0
-    #    self.__posts = 0
-    #    self.__share = 0
+    def __del__(self):
+        self.__top_posts = 0
+        self.__posts = 0
+        self.__share = 0
+
     # This function calls the SocialMedia display and also display's Instagram's own data members. The IIII's indicate
     # the data members. The function returns None if successful.
     def display(self) -> None:
@@ -322,8 +325,8 @@ class Interface():
         self.__tree = ds.Tree234()
 
     # Destructor
-    #def __del__(self):
-    #    self.__tree = None
+    def __del__(self):
+        self.__tree = None
     # This helper function is used to check that all inputed integers are not negative and allows for numbers 0-MAX.
     # It will loop until the user sastifies those conditions and returns the correct inputed number
     def _validate_int(self, prompt: str) -> int:
